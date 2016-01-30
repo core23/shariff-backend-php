@@ -24,6 +24,8 @@ class ShariffTest extends \PHPUnit_Framework_TestCase
 
     public function testShariff()
     {
+        $this->markTestSkipped();
+
         $shariff = new Backend(array(
             "domain"   => 'www.heise.de',
             "cache"    => array("ttl" => 1),
@@ -98,6 +100,8 @@ class ShariffTest extends \PHPUnit_Framework_TestCase
 
     public function testCacheOptions()
     {
+        $this->markTestSkipped();
+
         $this->setExpectedException('Zend\Cache\Exception\OutOfSpaceException');
         $shariff = new Backend(array(
             "domain"   => 'www.heise.de',

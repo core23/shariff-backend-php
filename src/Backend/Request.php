@@ -29,20 +29,39 @@ abstract class Request
      * @param string $url
      * @param string $method
      * @param array $options
-     * @return \GuzzleHttp\Message\Request
+     * @return \GuzzleHttp\Message\Request|\GuzzleHttp\Psr7\Request
      */
     protected function createRequest($url, $method = 'GET', $options = array())
     {
         // $defaults = array('future' => true, 'debug' => true);
         $defaults = array('future' => true, 'timeout' => 5.0);
 
-        $req = $this->client->createRequest(
-            $method,
-            $url,
-            array_merge($defaults, $options)
-        );
+        if (method_exists($this->client, 'createRequest')) {
+            $req = $this->client->createRequest(
+                $method,
+                $url,
+                array_merge($defaults, $options)
+            );
+        } else {
+            $req = $this->client->request(
+                $method,
+                $url,
+                array_merge($defaults, $options)
+            );
+        }
+
 
         return $req;
+    }
+
+    /**
+     * @param string $content
+     *
+     * @return string
+     */
+    public function filterResponse($content)
+    {
+        return $content;
     }
 
     /**

@@ -94,12 +94,11 @@ class BackendManager
         $counts = array();
         $i = 0;
         foreach ($this->services as $service) {
-            if (method_exists($results[$i], "json")) {
-                try {
-                    $counts[ $service->getName() ] = (int)$service->extractCount($results[$i]->json());
-                } catch (\Exception $e) {
-                    // Skip service if broken
-                }
+            try {
+                $body = $service->filterResponse($results[$i]);
+                $counts[$service->getName()] = (int) $service->extractCount(json_decode($body, true));
+            } catch (\Exception $e) {
+                // Skip service if broken
             }
             $i++;
         }

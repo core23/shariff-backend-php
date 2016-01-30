@@ -11,7 +11,7 @@ interface ServiceInterface
 {
     /**
      * @param string $url
-     * @return \GuzzleHttp\Message\Request
+     * @return \GuzzleHttp\Message\Request|\GuzzleHttp\Psr7\Request
      */
     public function getRequest($url);
 

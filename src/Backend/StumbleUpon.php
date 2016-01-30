@@ -19,7 +19,7 @@ class StumbleUpon extends Request implements ServiceInterface
 
     /**
      * @param string $url
-     * @return \GuzzleHttp\Message\Request|\GuzzleHttp\Message\RequestInterface
+     * @return \GuzzleHttp\Message\Request|\GuzzleHttp\Message\RequestInterface|\GuzzleHttp\Psr7\Request
      */
     public function getRequest($url)
     {

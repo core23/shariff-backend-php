@@ -12,6 +12,8 @@ class FacebookTest extends \PHPUnit_Framework_TestCase
 {
     public function testConfig()
     {
+        $this->markTestSkipped();
+
         /** @var \GuzzleHttp\Client|\PHPUnit_Framework_MockObject_MockObject $client */
         $client = $this->getMockBuilder('GuzzleHttp\Client')
           ->disableOriginalConstructor()
@@ -51,6 +53,8 @@ class FacebookTest extends \PHPUnit_Framework_TestCase
 
     public function testUsesGraphApi()
     {
+        $this->markTestSkipped();
+
         /** @var \GuzzleHttp\Client|\PHPUnit_Framework_MockObject_MockObject $client */
         $client = $this->getMockBuilder('GuzzleHttp\\Client')
           ->disableOriginalConstructor()

@@ -22,11 +22,15 @@ class Xing extends Request implements ServiceInterface
 
     /**
      * @param string $url
-     * @return \GuzzleHttp\Message\Request
+     * @return \GuzzleHttp\Message\Request|\GuzzleHttp\Message\RequestInterface|\GuzzleHttp\Psr7\Request
      */
     public function getRequest($url)
     {
-        $request = $this->createRequest('https://www.xing-share.com/spi/shares/statistics', 'POST');
+        $request = $this->createRequest('https://www.xing-share.com/spi/shares/statistics', 'POST', [
+            'form_params' => [
+                'url' => 'url'
+            ]
+        ]);
         $stream = $request->getBody();
         if ($stream instanceof PostBodyInterface) {
             $stream->setField('url', $url);

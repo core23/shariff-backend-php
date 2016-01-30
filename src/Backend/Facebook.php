@@ -19,7 +19,7 @@ class Facebook extends Request implements ServiceInterface
 
     /**
      * @param string $url
-     * @return \GuzzleHttp\Message\Request
+     * @return \GuzzleHttp\Message\Request|\GuzzleHttp\Psr7\Request|\GuzzleHttp\Psr7\Request
      */
     public function getRequest($url)
     {
@@ -50,7 +50,7 @@ class Facebook extends Request implements ServiceInterface
     }
 
     /**
-     * @return \GuzzleHttp\Stream\StreamInterface|null
+     * @return \GuzzleHttp\Stream\StreamInterface|\Psr\Http\Message\StreamInterface|null
      */
     protected function getAccessToken()
     {
@@ -58,8 +58,15 @@ class Facebook extends Request implements ServiceInterface
             try {
                 $url = 'https://graph.facebook.com/oauth/access_token?client_id=' . urlencode($this->config['app_id'])
                        . '&client_secret=' . urlencode($this->config['secret']) . '&grant_type=client_credentials';
-                $request = $this->client->createRequest('GET', $url);
-                return $this->client->send($request)->getBody(true);
+
+                if (method_exists($this->client, 'createRequest')) {
+                    $request = $this->client->createRequest('GET', $url);
+                    return $this->client->send($request)->getBody(true);
+                } else {
+                    $request = $this->client->request('GET', $url);
+                    return $this->client->send($request)->getBody();
+                }
+
             } catch (\Exception $e) {
             }
         }
